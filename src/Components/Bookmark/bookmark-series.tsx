@@ -1,25 +1,21 @@
-import data from "../../data.json";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { useGetBookmarkedQuery } from "../../redux/api/slices/show-api-slice";
 
 const BookmarkSeries = () => {
   const input = useSelector((state: RootState) => {
     return state.input.input;
   });
-  const series = data.filter((element) => {
-    if (input !== "") {
-      return (
-        element.category !== "Movie" &&
-        element.isBookmarked === true &&
-        element.title.toLowerCase().includes(input.toLowerCase())
-      );
-    }
-    return element.category !== "Movie" && element.isBookmarked === true;
-  });
+  const { data } = useGetBookmarkedQuery(input);
+  const series =
+    data &&
+    data.filter((element) => {
+      return element.category !== "Movie";
+    });
 
   return (
     <>
-      {series.length > 0 ? (
+      {series && series.length > 0 ? (
         <>
           <div className="mt-4">
             <label style={{ fontSize: "25px" }} className="text-[#FFFFFF]">
@@ -30,7 +26,7 @@ const BookmarkSeries = () => {
             {series.map((element, index) => {
               return (
                 <div
-                key={index}
+                  key={index}
                   style={{ maxWidth: "280px" }}
                   className=" flex flex-col mb-5  "
                 >

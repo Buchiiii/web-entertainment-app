@@ -5,7 +5,7 @@ const Recommended = () => {
   const input = useSelector((state: RootState) => {
     return state.input.input;
   });
-  const { data } = useGetRecommendedQuery();
+  const { data } = useGetRecommendedQuery(input);
 
   return (
     <>
@@ -20,7 +20,7 @@ const Recommended = () => {
           data.map((element, index) => {
             return (
               <div
-              key={index}
+                key={index}
                 style={{ maxWidth: "280px" }}
                 className=" flex flex-col mb-5  "
               >

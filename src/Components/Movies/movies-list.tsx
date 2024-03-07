@@ -1,13 +1,12 @@
-import data from "../../data.json";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useGetMoviesQuery } from "../../redux/api/slices/show-api-slice";
 
 const MoviesList = () => {
-  const { data, isLoading } = useGetMoviesQuery();
   const input = useSelector((state: RootState) => {
     return state.input.input;
   });
+  const { data } = useGetMoviesQuery(input);
   // const movies = data.filter((element) => {
   //   if (input !== "") {
   //     return (

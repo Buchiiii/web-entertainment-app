@@ -1,4 +1,3 @@
-import data from "../../data.json";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useGetSeriesQuery } from "../../redux/api/slices/show-api-slice";
@@ -7,8 +6,8 @@ const SeriesList = () => {
   const input = useSelector((state: RootState) => {
     return state.input.input;
   });
-  const { data } = useGetSeriesQuery();
- 
+  const { data } = useGetSeriesQuery(input);
+
   return (
     <>
       <div className="mt-4">
@@ -21,7 +20,7 @@ const SeriesList = () => {
           data.map((element, index) => {
             return (
               <div
-              key={index}
+                key={index}
                 style={{ maxWidth: "280px" }}
                 className=" flex flex-col mb-5  "
               >

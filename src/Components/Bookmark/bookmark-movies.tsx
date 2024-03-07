@@ -1,24 +1,21 @@
-import data from "../../data.json";
+
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { useGetBookmarkedQuery } from "../../redux/api/slices/show-api-slice";
 
 const BookmarkMovies = () => {
   const input = useSelector((state: RootState) => {
     return state.input.input;
   });
-  const movies = data.filter((element) => {
-    if (input !== "") {
-      return (
-        element.category === "Movie" &&
-        element.isBookmarked === true &&
-        element.title.toLowerCase().includes(input.toLowerCase())
-      );
-    }
-    return element.category === "Movie" && element.isBookmarked === true;
-  });
+  const { data } = useGetBookmarkedQuery(input);
+  const movies =
+    data &&
+    data.filter((element) => {
+      return element.category === "Movie";
+    });
   return (
     <>
-      {movies.length > 0 ? (
+      {movies && movies.length > 0 ? (
         <>
           <div className="mt-4">
             <label style={{ fontSize: "25px" }} className="text-[#FFFFFF]">
@@ -28,7 +25,8 @@ const BookmarkMovies = () => {
           <div className="grid sm:grid-cols-2 grid-cols-2  gap-x-5 md:grid-cols-3 lg:grid-cols-4 mb-5 mt-5">
             {movies.map((element, index) => {
               return (
-                <div key={index}
+                <div
+                  key={index}
                   style={{ maxWidth: "280px" }}
                   className=" flex flex-col mb-5  "
                 >

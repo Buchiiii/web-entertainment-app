@@ -22,17 +22,21 @@ interface IShow {
 const showApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTrending: builder.query<IShow[], void>({
-      query: () => "show/trending",
+      query: (input) => `show/trending`,
     }),
-    getMovies: builder.query<IShow[], void>({
-      query: () => "show/movies",
+    getMovies: builder.query<IShow[], string>({
+      query: (input) => `show/movies?search=${input}`,
     }),
-    getSeries: builder.query<IShow[], void>({
-      query: () => "show/series",
+    getSeries: builder.query<IShow[], string>({
+      query: (input) => `show/series?search=${input}`,
     }),
-    getRecommended: builder.query<IShow[], void>({
-      query: () => "show/recommended",
+    getRecommended: builder.query<IShow[], string>({
+      query: (input) => `show/recommended?search=${input}`,
     }),
+    getBookmarked: builder.query<IShow[], string>({
+      query: (input) => `show/bookmark?search=${input}`,
+    }),
+
   }),
 });
 
@@ -41,4 +45,5 @@ export const {
   useGetRecommendedQuery,
   useGetSeriesQuery,
   useGetTrendingQuery,
+  useGetBookmarkedQuery
 } = showApi;
